@@ -4,6 +4,7 @@
 namespace Laramin\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class CrudCommand extends Command
 {
