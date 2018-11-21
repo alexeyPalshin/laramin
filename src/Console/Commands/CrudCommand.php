@@ -12,7 +12,14 @@ class CrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'crud:hello';
+    protected $signature = 'crud:generate {model}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Generate crud for given Model';
 
     /**
      * Execute the console command.
@@ -21,6 +28,10 @@ class CrudCommand extends Command
      */
     public function handle()
     {
-        $this->output->write(['hello'], true);
+        $model = $this->argument('model');
+
+        DB::insert('insert into crud_models (model_name) values (?)', [$model]);
+
+        $this->output->write('ok', true);
     }
 }
