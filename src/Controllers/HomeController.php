@@ -8,6 +8,6 @@ class HomeController
 {
     public function __invoke()
     {
-        return 'admin';
+        return view('laramin.home');
     }
 }
