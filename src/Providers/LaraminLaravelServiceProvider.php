@@ -3,9 +3,11 @@
 
 namespace Laramin\Providers;
 
+use App\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Laramin\Controllers\DashboardController;
 use Laramin\Console\Commands\CrudCommand;
+use Laramin\Middleware\ModelCrudEntryPoint;
 
 class LaraminLaravelServiceProvider extends ServiceProvider
 {
@@ -28,12 +30,15 @@ class LaraminLaravelServiceProvider extends ServiceProvider
         // views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laramin');
 
+        $kernel = $this->app[Kernel::class];
+        $kernel->pushMiddleware(ModelCrudEntryPoint::class);
+
         $this->publishes([
             __DIR__ . '/../config/laramin.php' => config_path('laramin.php'),
             __DIR__ . '/../resources/views' => resource_path('views/vendor/laramin'),
         ]);
 
-        $attributes = ['middleware' => ['web']];
+        $attributes = ['middleware' => ['web', ModelCrudEntryPoint::class]];
 
         $this->app['router']->group($attributes, function ($router) {
             $router->match(
