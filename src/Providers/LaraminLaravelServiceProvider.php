@@ -4,7 +4,7 @@
 namespace Laramin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Laramin\Controllers\HomeController;
+use Laramin\Controllers\DashboardController;
 use Laramin\Console\Commands\CrudCommand;
 
 class LaraminLaravelServiceProvider extends ServiceProvider
@@ -38,7 +38,7 @@ class LaraminLaravelServiceProvider extends ServiceProvider
         $this->app['router']->group($attributes, function ($router) {
             $router->match(
                 ['get', 'post'], config('laramin.entrypoint'),
-                '\\' . HomeController::class
+                '\\' . DashboardController::class
             );
         });
     }
